@@ -9,6 +9,9 @@ class Agent:
         for attr_name, attr_value in agent_attributes.items():
             setattr(self,attr_name,attr_value)
 
-for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
-    agent = Agent(**agent_attributes)
-    print(agent.agreeableness)
+def main ():
+    for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
+        agent = Agent(**agent_attributes)
+        print(agent.agreeableness)
+
+main()
