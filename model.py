@@ -5,13 +5,26 @@ class Agent:
     def say_hello(self,first_name):
         return "Howdy "+first_name+" :D"
     #This is how to define an attribute on a class
-    def __init__(self,**agent_attributes):
+    def __init__(self,position,**agent_attributes):  #We added position in the parameters so that each agent created has a position defined
+        self.position=position
         for attr_name, attr_value in agent_attributes.items():
             setattr(self,attr_name,attr_value)
 
+class Position:
+
+    def __init__(self,longitude,latitude):
+        self.latitude=latitude
+        self.longitude=longitude
+
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
-        agent = Agent(**agent_attributes)
-        print(agent.country_name)
+        latitude=agent_attributes.pop('latitude')
+        longitude=agent_attributes.pop('longitude')
+        #Pop is used to fetch the agents positions and remove them from the dic since we won't use them anymore
+        position=Position(longitude,latitude)
+        #We then create an instance of the agent's position
+        #Now we need to update the Agent class so that is gives a position to each agent created
+        agent = Agent(position,**agent_attributes)
+        print(agent.position.latitude)
 
 main()
