@@ -12,6 +12,6 @@ class Agent:
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
         agent = Agent(**agent_attributes)
-        print(agent.agreeableness)
+        print(agent.country_name)
 
 main()
