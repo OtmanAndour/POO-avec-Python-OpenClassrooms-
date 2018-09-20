@@ -18,8 +18,12 @@ class Position:
         self.longitude_degrees=longitude_degrees
 
     @property #By doing so, the longitude method is turned into a porperty and can be called without using () afer longitude E.g : print(agent.position.longitude)
-    def longitude(self): #This method will convert the longitude(and latitude) in rad
+    def longitude(self): #This method will convert the longitude in rad
         return self.longitude_degrees * (math.pi/180)
+
+    @property
+    def latitude(self):
+        return self.latitude_degrees * (math.pi/180)
 
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
@@ -30,6 +34,6 @@ def main ():
         #We then create an instance of the agent's position
         #Now we need to update the Agent class so that is gives a position to each agent created
         agent = Agent(position,**agent_attributes)
-        print(agent.position.longitude)
+        print(agent.position.latitude, agent.position.longitude)
 
 main()
