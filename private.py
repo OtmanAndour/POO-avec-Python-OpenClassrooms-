@@ -24,5 +24,8 @@ class CoffeeMachine:
             print("Your coffee is done!")
 
 machine=CoffeeMachine()
-for i in range(0,5):
-    machine.make_coffee()
+#for i in range(0,5):
+#    machine.make_coffee()
+print("Make coffee:Public", machine.make_coffee())
+print("Start machine:Protected",machine._start_machine())
+print("Boil water:Private", machine._CoffeeMachine__boil_water())
