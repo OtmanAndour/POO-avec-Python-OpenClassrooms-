@@ -8,7 +8,7 @@ class CoffeeMachine:
         if self.WATER_LEVER>20:
             return True
 
-        else
+        else:
         print("Please add some water!")
         return False
 
