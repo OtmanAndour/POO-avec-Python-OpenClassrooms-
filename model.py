@@ -64,7 +64,7 @@ class Zone:
         return self.width * self.height
 
     @classmethod #This allows us to create a method for the class Zone, not just for an instance of the class Zone. We then need to replace all the self by cls
-    def _initialize_zones(cls): #We use an underscore to make this method protected, because we don't want to initialize the zones in the main, but rather in this method as it's meant to do
+    def _initialize_zones(cls): #We use an underscore to make this method protected, because we don't want to initialize the zones in the main, but rather in this method as it's avgt to do
         for latitude in range(cls.MIN_LATITUDE_DEGREES,cls.MAX_LATITUDE_DEGREES,cls.HEIGHT_DEGREES):
             for longitude in range(cls.MIN_LONGITUDE_DEGREES,cls.MAX_LONGITUDE_DEGREES,cls.WIDTH_DEGREES):
                 bottom_left_corner=Position(longitude,latitude)
@@ -95,6 +95,17 @@ class Zone:
 
         return zone
 
+    @property
+    def avg_agreeableness(self):
+        if not self.inhabitants:
+            return 0
+        sum_agreeableness=0
+        for inhabitant in self.inhabitants :
+            sum_agreeableness += inhabitant.agreeableness
+
+        return sum_agreeableness/self.population
+
+
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
         latitude=agent_attributes.pop('latitude')
@@ -106,5 +117,5 @@ def main ():
         agent = Agent(position,**agent_attributes)
         zone=Zone.find_zone_that_contains(position)
         zone.add_inhabitant(agent)
-        print(zone.area)
+        print(zone.avg_agreeableness)
 main()
