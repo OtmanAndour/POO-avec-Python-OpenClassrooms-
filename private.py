@@ -4,7 +4,7 @@ class CoffeeMachine:
     WATER_LEVER=100
 
 
-    def start_machine(self):
+    def _start_machine(self): #Adding an underscore before start_machine means that this method is now protected
         if self.WATER_LEVER>20:
             return True
 
@@ -13,14 +13,14 @@ class CoffeeMachine:
             return False
 
 
-    def boil_water(self):
+    def __boil_water(self): #Adding 2 underscores before boil_water means that this method is now private
         #boils the water
         return("boiling...")
 
     def make_coffee(self):
-        if self.start_machine():
+        if self._start_machine():
             self.WATER_LEVER -=20
-            print(self.boil_water())
+            print(self.__boil_water())
             print("Your coffee is done!")
 
 machine=CoffeeMachine()
