@@ -64,6 +64,10 @@ class Zone:
     def area(self):
         return self.width * self.height
 
+    @property
+    def population_density(self):
+        return self.population/self.area
+
     @classmethod #This allows us to create a method for the class Zone, not just for an instance of the class Zone. We then need to replace all the self by cls
     def _initialize_zones(cls): #We use an underscore to make this method protected, because we don't want to initialize the zones in the main, but rather in this method as it's avgt to do
         for latitude in range(cls.MIN_LATITUDE_DEGREES,cls.MAX_LATITUDE_DEGREES,cls.HEIGHT_DEGREES):
@@ -117,12 +121,21 @@ class BaseGraph:
         self.show_grid=True
 
     def show(self,zones):
+        x_values,y_values=self.xy_values(zones)
         plt.plot(x_values,y_values,'.')
         plt.xlabel(self.x_label)
         plt.ylabel(self.y_label)
         plt.title(self.title)
         plt.grid(self.show_grid)
         plt.show()
+
+    def xy_values(self,zones): # We want this method to work for every sub-class of this class, but still adapt it to each subclass
+         raise NotImplementedError
+         #This assure that if this method is used outside of a sub-class, an error will occur, as we want to use it differently for each particular case
+        
+        #x_values=[zone.population_density for zone in zones]
+        #y_values=[zone.avg_agreeableness for zone in zones]
+        #return (x_values,y_values)
 
 class AgreeablenessGraph(BaseGraph): #This class is a sub-class of the BaseGraph class so that we can call the BaseGraph class but use our own attributes
 
@@ -132,7 +145,10 @@ class AgreeablenessGraph(BaseGraph): #This class is a sub-class of the BaseGraph
         self.x_label="population density"
         self.y_label="Agreeableness"
 
-    
+    def xy_values(self,zones):
+        x_values=[zone.population_density for zone in zones]
+        y_values=[zone.avg_agreeableness for zone in zones]
+        return (x_values,y_values)
 
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
@@ -145,10 +161,9 @@ def main ():
         agent = Agent(position,**agent_attributes)
         zone=Zone.find_zone_that_contains(position)
         zone.add_inhabitant(agent)
-        print(zone.avg_agreeableness)
-
+    
         #Graph init
-        #agreeableness_graph=AgreeablenessGraph()
+        agreeableness_graph=AgreeablenessGraph()
         #Graph show
-        #agreeableness_graph.show(Zone.ZONES)
+        agreeableness_graph.show(Zone.ZONES)
 main()
