@@ -1,5 +1,6 @@
 import json
 import math
+import matplotlib.pyplot as plt
 
 class Agent:
     #This is how to define a method on a class
@@ -107,6 +108,24 @@ class Zone:
 
         return sum([inhabitant.agreeableness for inhabitant in self.inhabitants])/self.population
 
+class BaseGraph:
+
+    def __init__(self):
+        self.title="Your graph title"
+        self.x_label="X_axis label"
+        self.y_label="Y_axis label"
+        self.show_grid=True
+
+    def show(self,zones):
+        plt.plot(x_values,y_values,'.')
+        plt.xlabel(self.x_label)
+        plt.ylabel(self.y_label)
+        plt.title(self.title)
+        plt.grid(self.show_grid)
+        plt.show()
+
+
+
 
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
@@ -120,4 +139,9 @@ def main ():
         zone=Zone.find_zone_that_contains(position)
         zone.add_inhabitant(agent)
         print(zone.avg_agreeableness)
+
+        #Graph init
+        #agreeableness_graph=AgreeablenessGraph()
+        #Graph show
+        #agreeableness_graph.show(Zone.ZONES)
 main()
