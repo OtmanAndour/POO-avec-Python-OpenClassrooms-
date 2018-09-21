@@ -48,7 +48,7 @@ class Zone:
         return len(self.inhabitants)
 
     @classmethod #This allows us to create an instance of the Zone class inside of the Zone class. We then need to replace all the self by cls
-    def initialize_zones(cls):
+    def _initialize_zones(cls): #We use an underscore to make this method protected, because we don't want to initialize the zones in the main, but rather in this method as it's meant to do
         for latitude in range(cls.MIN_LATITUDE_DEGREES,cls.MAX_LATITUDE_DEGREES,cls.HEIGHT_DEGREES):
             for longitude in range(cls.MIN_LONGITUDE_DEGREES,cls.MAX_LONGITUDE_DEGREES,cls.WIDTH_DEGREES):
                 bottom_left_corner=Position(longitude,latitude)
@@ -66,6 +66,8 @@ class Zone:
     @classmethod
     def find_zone_that_contains(cls, position):
         # Compute the index in the ZONES array that contains the given position
+        if not cls.ZONES: # We need to check if there are zones created or not
+            cls._initialize_zones() # If not, we create them
         longitude_index = int((position.longitude_degrees - cls.MIN_LONGITUDE_DEGREES)/ cls.WIDTH_DEGREES)
         latitude_index = int((position.latitude_degrees - cls.MIN_LATITUDE_DEGREES)/ cls.HEIGHT_DEGREES)
         longitude_bins = int((cls.MAX_LONGITUDE_DEGREES - cls.MIN_LONGITUDE_DEGREES) / cls.WIDTH_DEGREES) # 180-(-180) / 1
@@ -86,7 +88,6 @@ def main ():
         #We then create an instance of the agent's position
         #Now we need to update the Agent class so that is gives a position to each agent created
         agent = Agent(position,**agent_attributes)
-        Zone.initialize_zones()
         zone=Zone.find_zone_that_contains(position)
         zone.add_inhabitant(agent)
         print(zone.population)
