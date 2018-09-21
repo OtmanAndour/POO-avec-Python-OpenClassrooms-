@@ -34,6 +34,7 @@ class Zone:
     MAX_LATITUDE_DEGREES=90
     HEIGHT_DEGREES=1
     WIDTH_DEGREES=1
+    EARTH_RADIUS_KILOMETERS=6371
 
     #Creates an instance of a zone
     def __init__(self,corner1,corner2):
@@ -49,6 +50,15 @@ class Zone:
     @property
     def population(self):
         return len(self.inhabitants)
+
+    @property
+    def width(self):
+        return abs(self.corner1.longitude - self.corner2.longitude) * self.EARTH_RADIUS_KILOMETERS
+
+    @property
+    def height(self):
+        return abs(self.corner1.latitude - self.corner2.latitude) * self.EARTH_RADIUS_KILOMETERS
+
 
     @classmethod #This allows us to create a method for the class Zone, not just for an instance of the class Zone. We then need to replace all the self by cls
     def _initialize_zones(cls): #We use an underscore to make this method protected, because we don't want to initialize the zones in the main, but rather in this method as it's meant to do
@@ -93,5 +103,5 @@ def main ():
         agent = Agent(position,**agent_attributes)
         zone=Zone.find_zone_that_contains(position)
         zone.add_inhabitant(agent)
-        print(zone.population)
+        print(zone.width,zone.height)
 main()
