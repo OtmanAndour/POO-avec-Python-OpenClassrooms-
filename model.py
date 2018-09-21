@@ -124,8 +124,15 @@ class BaseGraph:
         plt.grid(self.show_grid)
         plt.show()
 
+class AgreeablenessGraph(BaseGraph): #This class is a sub-class of the BaseGraph class so that we can call the BaseGraph class but use our own attributes
 
+    def __init__(self):
+        super().__init__() #This call the main class init method, so that we kepp show_grid to True but still change the other values
+        self.title="Nice people live in the countryside"
+        self.x_label="population density"
+        self.y_label="Agreeableness"
 
+    
 
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
