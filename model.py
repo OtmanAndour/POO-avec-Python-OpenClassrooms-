@@ -163,7 +163,7 @@ def main ():
         zone.add_inhabitant(agent)
     
         #Graph init
-        agreeableness_graph=AgreeablenessGraph()
+    agreeableness_graph=AgreeablenessGraph()
         #Graph show
-        agreeableness_graph.show(Zone.ZONES)
+    agreeableness_graph.show(Zone.ZONES)
 main()
