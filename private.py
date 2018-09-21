@@ -9,8 +9,8 @@ class CoffeeMachine:
             return True
 
         else:
-        print("Please add some water!")
-        return False
+            print("Please add some water!")
+            return False
 
 
     def boil_water(self):
@@ -24,5 +24,5 @@ class CoffeeMachine:
             print("Your coffee is done!")
 
 machine=CoffeeMachine()
-for i in ragne(0,5):
+for i in range(0,5):
     machine.make_coffee()
