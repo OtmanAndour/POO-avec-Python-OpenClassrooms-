@@ -35,19 +35,22 @@ class Zone:
     HEIGHT_DEGREES=1
     WIDTH_DEGREES=1
 
+    #Creates an instance of a zone
     def __init__(self,corner1,corner2):
         self.corner1=corner1
         self.corner2=corner2
-        self.inhabitants=[]
+        self.inhabitants=[] #No inhabitants when created
 
+    #This adds an inhabitant in an instance of a zone
     def add_inhabitant(self,inhabitant):
         self.inhabitants.append(inhabitant)
 
+    #This method gives the population of an instance of a zone, as a property of the instance we're working with
     @property
     def population(self):
         return len(self.inhabitants)
 
-    @classmethod #This allows us to create an instance of the Zone class inside of the Zone class. We then need to replace all the self by cls
+    @classmethod #This allows us to create a method for the class Zone, not just for an instance of the class Zone. We then need to replace all the self by cls
     def _initialize_zones(cls): #We use an underscore to make this method protected, because we don't want to initialize the zones in the main, but rather in this method as it's meant to do
         for latitude in range(cls.MIN_LATITUDE_DEGREES,cls.MAX_LATITUDE_DEGREES,cls.HEIGHT_DEGREES):
             for longitude in range(cls.MIN_LONGITUDE_DEGREES,cls.MAX_LONGITUDE_DEGREES,cls.WIDTH_DEGREES):
