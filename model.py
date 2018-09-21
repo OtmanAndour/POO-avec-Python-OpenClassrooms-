@@ -99,11 +99,13 @@ class Zone:
     def avg_agreeableness(self):
         if not self.inhabitants:
             return 0
-        sum_agreeableness=0
-        for inhabitant in self.inhabitants :
-            sum_agreeableness += inhabitant.agreeableness
+     #   sum_agreeableness=0
+     #   for inhabitant in self.inhabitants :
+     #       sum_agreeableness += inhabitant.agreeableness
+     #   return sum_agreeableness/self.population
+    #We can calculate the avg_agreeableness this way, or we can be smarter and faster :
 
-        return sum_agreeableness/self.population
+        return sum([inhabitant.agreeableness for inhabitant in self.inhabitants])/self.population
 
 
 def main ():
