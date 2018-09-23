@@ -112,6 +112,16 @@ class Zone:
 
         return sum([inhabitant.agreeableness for inhabitant in self.inhabitants])/self.population
 
+    @property
+    def age(self):
+        return [inhabitant.age for inhabitant in self.inhabitants]
+
+    @property
+    def income(self):
+        return [inhabitant.income for inhabitant in self.inhabitants]
+
+
+
 class BaseGraph:
 
     def __init__(self):
@@ -150,6 +160,22 @@ class AgreeablenessGraph(BaseGraph): #This class is a sub-class of the BaseGraph
         y_values=[zone.avg_agreeableness for zone in zones]
         return (x_values,y_values)
 
+class IncomeGraph(BaseGraph):
+
+    def __init__(self):
+        super().__init__()
+        self.title="Money can't buy hapiness"
+        self.x_label="Age"
+        self.y_label="Income"
+
+    def xy_values(self,zones):
+        x_values,y_values=[],[]
+        for zone in zones:
+            x_values+=zone.age
+            y_values+=zone.income
+        return (x_values,y_values)
+
+
 def main ():
     for agent_attributes in json.load(open("agents-100k.json")): #Open the json file and load it
         latitude=agent_attributes.pop('latitude')
@@ -162,8 +188,10 @@ def main ():
         zone=Zone.find_zone_that_contains(position)
         zone.add_inhabitant(agent)
     
-        #Graph init
+        
     agreeableness_graph=AgreeablenessGraph()
-        #Graph show
     agreeableness_graph.show(Zone.ZONES)
+
+    income_graph=IncomeGraph()
+    income_graph.show(Zone.ZONES)
 main()
