@@ -1,3 +1,8 @@
+#The purpose of this program is just to illustrate the notions of public, protected and private methods,
+#With the example of a coffee machine
+
+
+
 class CoffeeMachine:
     #The machine's max water level is 100, and we want the machine to start if
     #water_level>20
